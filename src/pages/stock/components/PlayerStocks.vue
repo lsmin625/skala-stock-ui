@@ -21,13 +21,6 @@ const table = reactive({
 
 const player = usePlayer();
 
-const jobStyles = reactive([
-  { label: '일반', value: 'normal' },
-  { label: '병렬', value: 'parallel' },
-  { label: '쉘', value: 'shell' },
-  { label: 'OnD', value: 'ondemand' }
-])
-
 const getPlayerInfo = async () => {
   table.items.length = 0
   const url = '/api/players/' + player.playerId;
