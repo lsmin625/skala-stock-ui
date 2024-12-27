@@ -44,7 +44,7 @@ const signup = async () => {
     <div class="bss-background p-1">
       <template v-if="isNewPlayer">
         <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
-          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Manager</span>
+          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
         </div>
         <div class="row bg-info-subtle p-2 m-1" style="opacity: 92%;">
           <div class="col">
@@ -59,7 +59,7 @@ const signup = async () => {
       </template>
       <template v-else>
         <div class="mt-3 d-flex justify-content-center" style="height: 270px;">
-          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Manager</span>
+          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
         </div>
         <div class="row bg-info-subtle p-2 m-1" style="opacity: 92%;">
           <div class="col">

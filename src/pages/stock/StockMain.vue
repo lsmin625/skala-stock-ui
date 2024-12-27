@@ -10,7 +10,7 @@ import StockList from "./components/StockList.vue";
   <div class="container-fluid">
     <div class="row bg-body-tertiary">
       <div class="col">
-        <span class="ps-2 fs-2">SKALA STOCK Manager</span>
+        <span class="ps-2 fs-2">SKALA STOCK Market</span>
       </div>
     </div>
     <div class="row">
