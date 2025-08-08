@@ -25,7 +25,7 @@ const login = async () => {
     router.push('/stock');
   } else {
     isNewPlayer.value = true;
-    notifyInfo("초기투자금을 입력후 [플레이어 등록] 버튼을 누르세요.");
+    notifyInfo("ID와 비밀번호 입력후 [회원가입] 버튼을 누르세요.");
   }
 }
 
@@ -49,35 +49,20 @@ const signup = async () => {
 <template>
   <div class="container-sm mt-3 border border-2 p-1" style="max-width: 600px">
     <div class="bss-background p-1">
-      <template v-if="isNewPlayer">
-        <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
-          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
+      <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
+        <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
+      </div>
+      <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
+        <div class="col">
+          <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID" />
+          <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호"
+            @input-enter-pressed="login" />
         </div>
-        <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
-          <div class="col">
-            <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID 입력" />
-            <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호 입력" />
-          </div>
-          <div class="d-flex justify-content-end">
-            <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">회원가입</button>
-          </div>
+        <div class="d-flex justify-content-end">
+          <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">회원가입</button>
+          <button v-else class="btn btn-primary btn-sm" @click="login">로그인</button>
         </div>
-      </template>
-      <template v-else>
-        <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
-          <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
-        </div>
-        <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
-          <div class="col">
-            <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID" />
-            <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호"
-              @input-enter-pressed="login" />
-          </div>
-          <div class="d-flex justify-content-end">
-            <button class="btn btn-primary btn-sm" @click="login">로그인</button>
-          </div>
-        </div>
-      </template>
+      </div>
     </div>
   </div>
 </template>
