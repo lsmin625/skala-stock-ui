@@ -55,8 +55,7 @@ const signup = async () => {
       <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
         <div class="col">
           <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID" />
-          <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호"
-            @input-enter-pressed="login" />
+          <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호" />
         </div>
         <div class="d-flex justify-content-end">
           <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">회원가입</button>
