@@ -1,49 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue';
-import { useRouter } from 'vue-router';
-import apiCall from '@/scripts/api-call';
-import { storePlayer } from '@/scripts/store-player';
-import { notifyInfo } from '@/scripts/store-popups';
 
-const router = useRouter();
-
-const playerId = ref('');
-const playerPassword = ref('');
-const playerMoney = ref('');
-const isNewPlayer = ref(false);
-
-const login = async () => {
-  const url = '/api/players/login';
-  const requestBody = {
-    playerId: playerId.value,
-    playerPassword: playerPassword.value,
-  }
-
-  const response = await apiCall.post(url, null, requestBody);
-  if (response.result === apiCall.Response.SUCCESS) {
-    storePlayer(response.body); // 플레이어 정보를 저장
-    router.push('/stock');
-  } else {
-    isNewPlayer.value = true;
-    notifyInfo("ID와 비밀번호 입력후 [회원가입] 버튼을 누르세요.");
-  }
-}
-
-const signup = async () => {
-  const url = '/api/players';
-  const requestBody = {
-    id: 0,
-    playerId: playerId.value,
-    playerPassword: playerPassword.value,
-    playerMoney: playerMoney.value
-  }
-
-  const response = await apiCall.post(url, null, requestBody);
-  if (response.result === apiCall.Response.SUCCESS) {
-    isNewPlayer.value = false;
-    login();
-  }
-}
 </script>
 
 <template>
@@ -54,12 +10,12 @@ const signup = async () => {
       </div>
       <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
         <div class="col">
-          <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID" />
-          <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호" />
+          <InlineInput label="플레이어ID" class="mb-1" type="text" placeholder="플레이어ID" />
+          <InlineInput label="비밀번호" class="mb-1" type="password" placeholder="비밀번호" />
         </div>
         <div class="d-flex justify-content-end">
-          <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">회원가입</button>
-          <button v-else class="btn btn-primary btn-sm" @click="login">로그인</button>
+          <button class="btn btn-primary btn-sm">회원가입</button>
+          <button class="btn btn-primary btn-sm">로그인</button>
         </div>
       </div>
     </div>
