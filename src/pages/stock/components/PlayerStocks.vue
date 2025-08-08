@@ -8,13 +8,14 @@ const router = useRouter();
 
 const stockId = ref('');
 const stockQuantity = ref('');
+const playerMoney = ref('');
 
 const table = reactive({
   headers: [
-    { label: "주식ID", value: "id" },
+    { label: "주식ID", value: "stockId" },
     { label: "주식명", value: "stockName" },
     { label: "주식가격", value: "stockPrice" },
-    { label: "보유수량", value: "stockQuantity" }
+    { label: "보유수량", value: "quantity" }
   ],
   items: []
 })
@@ -26,8 +27,8 @@ const getPlayerInfo = async () => {
   const url = '/api/players/' + player.playerId;
   const response = await apiCall.get(url, null, null);
   if (response.result === apiCall.Response.SUCCESS) {
-    storePlayer(response.body); // 플레이어 정보를 저장
-    table.items = response.body.playerStockList;
+    playerMoney.value = response.body.playerMoney
+    table.items = response.body.stocks;
   }
 }
 
@@ -60,11 +61,7 @@ const sellPlayerStock = async () => {
 }
 
 onMounted(() => {
-  if (player.playerId === '') {
-    router.push("/");
-  } else {
-    table.items = player.playerStockList;
-  }
+  getPlayerInfo()
 })
 </script>
 
@@ -82,7 +79,7 @@ onMounted(() => {
   <div class="row">
     <div class="col">
       <InlineInput class="m-2" label="플레이어ID" v-model="player.playerId" :disabled="true" />
-      <InlineInput class="m-2" label="보유금액" v-model="player.playerMoney" :disabled="true" />
+      <InlineInput class="m-2" label="보유금액" v-model="playerMoney" :disabled="true" />
     </div>
   </div>
   <div class="row g-2 align-items-center m-2 mt-0">

@@ -8,12 +8,18 @@ import { notifyInfo } from '@/scripts/store-popups';
 const router = useRouter();
 
 const playerId = ref('');
+const playerPassword = ref('');
 const playerMoney = ref('');
 const isNewPlayer = ref(false);
 
-const start = async () => {
-  const url = '/api/players/' + playerId.value;
-  const response = await apiCall.justGet(url, null, null);
+const login = async () => {
+  const url = '/api/players/login';
+  const requestBody = {
+    playerId: playerId.value,
+    playerPassword: playerPassword.value,
+  }
+
+  const response = await apiCall.post(url, null, requestBody);
   if (response.result === apiCall.Response.SUCCESS) {
     storePlayer(response.body); // 플레이어 정보를 저장
     router.push('/stock');
@@ -28,13 +34,14 @@ const signup = async () => {
   const requestBody = {
     id: 0,
     playerId: playerId.value,
+    playerPassword: playerPassword.value,
     playerMoney: playerMoney.value
   }
 
   const response = await apiCall.post(url, null, requestBody);
   if (response.result === apiCall.Response.SUCCESS) {
     isNewPlayer.value = false;
-    start();
+    login();
   }
 }
 </script>
@@ -46,28 +53,28 @@ const signup = async () => {
         <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
           <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
         </div>
-        <div class="row bg-info-subtle p-2 m-1" style="opacity: 92%;">
+        <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
           <div class="col">
             <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID 입력" />
-            <InlineInput label="초기투자금" class="mb-1" v-model="playerMoney" type="text" placeholder="초기투자금 입력" />
+            <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호 입력" />
           </div>
           <div class="d-flex justify-content-end">
-            <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">플레이어
-              등록</button>
+            <button v-if="isNewPlayer" class="btn btn-primary btn-sm" @click="signup">회원가입</button>
           </div>
         </div>
       </template>
       <template v-else>
-        <div class="mt-3 d-flex justify-content-center" style="height: 270px;">
+        <div class="mt-3 d-flex justify-content-center" style="height: 230px;">
           <span class="text-center text-danger fs-1 fw-bold mt-4">SKALA STOCK Market</span>
         </div>
-        <div class="row bg-info-subtle p-2 m-1" style="opacity: 92%;">
+        <div class="row bg-info-subtle p-2 m-1" style="opacity: 95%;">
           <div class="col">
-            <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID 입력"
-              @input-enter-pressed="start" />
+            <InlineInput label="플레이어ID" class="mb-1" v-model="playerId" type="text" placeholder="플레이어ID" />
+            <InlineInput label="비밀번호" class="mb-1" v-model="playerPassword" type="password" placeholder="비밀번호"
+              @input-enter-pressed="login" />
           </div>
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary btn-sm" @click="start">시작</button>
+            <button class="btn btn-primary btn-sm" @click="login">로그인</button>
           </div>
         </div>
       </template>
