@@ -5,19 +5,6 @@ export const Response = {
     FAIL: 1,
 };
 
-const AUTH_ERRORS = [9001, 9004];
-
-const checkSession = (code: number, message: string, notify: boolean) => {
-    if (notify) {
-        notifyError(message);
-    }
-    if (AUTH_ERRORS.includes(code)) {
-        setTimeout(() => {
-            window.location.href = '/logout'
-        }, 2000);
-    }
-};
-
 const apiHeaders = {
     'Content-Type': 'application/json',
 };
@@ -27,8 +14,9 @@ const handleResponse = async (response: Response, notify: boolean) => {
         const data = await response.json();
         if (data.result === Response.SUCCESS) {
             return data;
-        } else {
-            checkSession(data.code, data.message, notify);
+        } 
+        if(notify) {
+            notifyError(data.message);
             return data;
         }
     } else {
